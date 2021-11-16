@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"start": "npm run build && dist/cli.js",
+		"start": "npm run build && chmod +x dist/cli.js && dist/cli.js",
 		"pretest": "npm run build",
 		"test": "xo && ava"
 	},
@@ -17,6 +17,7 @@
 	],
 	"dependencies": {
 		"ink": "^3.2.0",
+		"ink-link": "^2.0.0",
 		"ink-spinner": "^4.0.3",
 		"ink-text-input": "^4.0.2",
 		"isomorphic-fetch": "^3.0.0",

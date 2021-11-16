@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Text, Box, useInput } from 'ink'
+import { Text, Box, Newline, useInput } from 'ink'
 
-import { Loading } from '../util/loading'
+import { Title, Loading } from '../util'
 import { theme, Error } from '../theme'
 import { confirm } from '../api/auth'
 
@@ -41,14 +41,15 @@ export const Confirm = ({ next, count = 6 }) => {
 
   return (
     <>
+      <Title>🔑 Confirm Code</Title>
       <Text>👉 We have just emailed you a confirmation code!</Text>
       <Text>Please enter the code here and press <Text bold color={theme.primary}>{'<Enter>'}</Text></Text>
       <Box flexDirection='row'>
         {
           code.map((c, i) => (
             <Box key={i} paddingX={1}
-              borderStyle='round'
-              borderColor={i === index ? theme.primary : 'gray'}
+              borderStyle='single'
+              borderColor={i === index ? theme.accent : 'gray'}
             >
               <Text bold>{c}</Text>
             </Box>
@@ -57,6 +58,7 @@ export const Confirm = ({ next, count = 6 }) => {
       </Box>
       { error && <Error>{error}</Error>}
       { loading && <Loading> Verifying code ...</Loading>}
+      <Newline/>
     </>
   )
 }

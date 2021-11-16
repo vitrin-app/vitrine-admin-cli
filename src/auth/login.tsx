@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Text } from 'ink'
+import { Text, Newline } from 'ink'
 import TextInput from 'ink-text-input'
 
-import { Primary, Error } from '../theme'
-import { Loading } from '../util/loading'
+import { Accent, Error } from '../theme'
+import { Title, Loading } from '../util'
 import { verifyEmail } from '../api/auth'
 
 
@@ -37,15 +37,18 @@ export const Login = ({ next }) => {
 
   return (
     <>
+      <Title>🔑 Login</Title>
       <Text>👉 Please enter your email address.</Text>
-      <Primary>
+      <Accent>
         <TextInput placeholder='Your email address ...'
+          showCursor={false}
           value={email}
           onChange={setEmail}
           onSubmit={submit}/>
-      </Primary>
+      </Accent>
       { error && <Error>{error}</Error> }
       { loading && <Loading>Sending verification email ...</Loading>}
+      <Newline/>
     </>
   )
 }

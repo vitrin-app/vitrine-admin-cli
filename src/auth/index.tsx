@@ -22,9 +22,9 @@ export const Authenticated = ({ children }) => {
 
       if (_token) {
         setToken(_token)
-        route('home')
+        route('home', true)
       } else {
-        route('login')
+        route('login', true)
       }
     })()
   }, [])
@@ -32,12 +32,12 @@ export const Authenticated = ({ children }) => {
   return (
     <AuthContext.Provider value={{ token }}>
       <Route path='login'>
-        <Login next={() => route('login/confirm')} />
+        <Login next={() => route('login/confirm', true)} />
       </Route>
       <Route path='login/confirm'>
         <Confirm next={t => {
           setToken(t)
-          route('home')
+          route('home', true)
           save(t)
         }} />
       </Route>
