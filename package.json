@@ -1,6 +1,6 @@
 {
 	"name": "vitrine-admin-cli",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"license": "MIT",
 	"bin": "dist/cli.js",
 	"engines": {
@@ -10,7 +10,8 @@
 		"build": "tsc",
 		"start": "npm run build && chmod +x dist/cli.js && dist/cli.js",
 		"pretest": "npm run build",
-		"test": "xo && ava"
+		"test": "xo && ava",
+		"postinstall": "tsc"
 	},
 	"files": [
 		"dist/cli.js"
@@ -23,6 +24,7 @@
 		"isomorphic-fetch": "^3.0.0",
 		"meow": "^9.0.0",
 		"minimatch": "^3.0.4",
+		"open": "^8.4.0",
 		"react": "^17.0.2"
 	},
 	"ava": {
@@ -46,6 +48,7 @@
 		"@sindresorhus/tsconfig": "^2.0.0",
 		"@types/isomorphic-fetch": "^0.0.35",
 		"@types/minimatch": "^3.0.5",
+		"@types/open": "^6.2.1",
 		"@types/react": "^17.0.35",
 		"ava": "^3.15.0",
 		"chalk": "^4.1.2",

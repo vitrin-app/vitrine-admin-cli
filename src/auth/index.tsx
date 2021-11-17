@@ -4,10 +4,11 @@ import { Route, useRouter } from '../router'
 import { Loading } from '../util/loading'
 import { Confirm } from './confirm'
 import { Login } from './login'
-import { save, load } from './persist'
+import { Logout } from './logout'
+import { save, load, clear } from './persist'
 
 
-export const AuthContext = createContext({ token: '' })
+export const AuthContext = createContext({ token: '', logout: () => {} })
 
 
 export const Authenticated = ({ children }) => {
@@ -29,8 +30,13 @@ export const Authenticated = ({ children }) => {
     })()
   }, [])
 
+  const logout = async () => {
+    setToken('')
+    await clear()
+  }
+
   return (
-    <AuthContext.Provider value={{ token }}>
+    <AuthContext.Provider value={{ token, logout }}>
       <Route path='login'>
         <Login next={() => route('login/confirm', true)} />
       </Route>
@@ -40,6 +46,9 @@ export const Authenticated = ({ children }) => {
           route('home', true)
           save(t)
         }} />
+      </Route>
+      <Route path='logout'>
+        <Logout action={logout} />
       </Route>
       { token ? children : <></> }
       { loading && <Loading>Checking authentication ...</Loading>}

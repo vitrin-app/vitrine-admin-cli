@@ -3,12 +3,12 @@ import React from 'react'
 import { render, Box } from 'ink'
 
 import { App } from './app'
-import { Router } from './router'
+import { Routed } from './router'
 
 
 const CLI = () => (
   <Box flexDirection='column'>
-    <Router><App/></Router>
+    <Routed><App/></Routed>
   </Box>
 )
 render(<CLI/>)

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Text, Box, Newline, useInput } from 'ink'
+import React, { useState, useEffect } from 'react'
+import { Text, Box, useInput } from 'ink'
 
+import { useHint } from '../hint'
 import { Title, Loading, Line, Padding } from '../util'
 import { theme, Error } from '../theme'
 import { confirm } from '../api/auth'
@@ -11,6 +12,11 @@ export const Confirm = ({ next, count = 6 }) => {
   const [index, setIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
+  const { hint } = useHint()
+
+  useEffect(() => {
+    hint(['<0-9>: enter code | ↩: submit code'])
+  }, [])
 
   useInput(async (input, key) => {
     if (input >= '0' && input <= '9') {
@@ -63,7 +69,7 @@ export const Confirm = ({ next, count = 6 }) => {
       </Box>
       { error && <Error>{error}</Error>}
       { loading && <Loading> Verifying code ...</Loading>}
-      <Newline/>
+      <Line><Text/></Line>
     </>
   )
 }

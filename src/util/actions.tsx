@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Text, useInput } from 'ink'
 
-import { theme } from '../theme'
+import { useHint } from '../hint'
+import { theme, Error } from '../theme'
 import { Divider } from './divider'
 import { Padding } from './padding'
 import { Spinner } from './spinner'
@@ -10,13 +11,16 @@ import { Spinner } from './spinner'
 export interface ActionsProps {
   actions: {
     label: string,
+    hint: string,
     action: () => Promise<void>
   }[]
 }
 
 export const Actions = ({ actions }: ActionsProps) => {
+  const { hint } = useHint()
   const [index, setIndex] = useState(-1)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | undefined>(undefined)
 
   useInput(async (_, key) => {
     if (!loading) {
@@ -26,11 +30,25 @@ export const Actions = ({ actions }: ActionsProps) => {
         setIndex(index + 1)
       } else if (key.return && !!actions[index]) {
         setLoading(true)
-        await actions[index]!.action()
-        setLoading(false)
+        setError(undefined)
+
+        try {
+          await actions[index]!.action()
+          setLoading(false)
+        } catch (err: any) {
+          setLoading(false)
+          setError(err.message || err.toString())
+        }
       }
     }
   })
+
+  useEffect(() => {
+    hint([
+      actions[index]?.hint || '',
+      '◀,▶: navigate | ↩: select action'
+    ])
+  }, [index])
 
   return (
     <>
@@ -48,6 +66,7 @@ export const Actions = ({ actions }: ActionsProps) => {
           ))
         }
       </Box>
+      { error && <Error>{error}</Error> }
     </>
   )
 }

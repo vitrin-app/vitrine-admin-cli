@@ -20,7 +20,12 @@ export const request = async (method: string, url: string, body?: any, token?: s
   const response = await fetch(url, opts)
 
   if (!response.ok) {
-    throw new Error((await response.json()).message)
+    let message = await response.text()
+    try {
+      message = JSON.parse(message).message
+    } catch { /* ignore */ }
+
+    throw new Error(message)
   } else {
     try {
       return await response.json()

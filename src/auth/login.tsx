@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { Text, Newline } from 'ink'
+import React, { useState, useEffect } from 'react'
+import { Text } from 'ink'
 import TextInput from 'ink-text-input'
 
+import { useHint } from '../hint'
 import { Accent, Error } from '../theme'
 import { Title, Loading, Line } from '../util'
 import { verifyEmail } from '../api/auth'
@@ -16,6 +17,11 @@ export const Login = ({ next }) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState<string | undefined>(undefined)
   const [loading, setLoading] = useState(false)
+  const { hint } = useHint()
+
+  useEffect(() => {
+    hint(['↩: submit email'])
+  }, [])
 
   const submit = async () => {
     if (!isValidEmail(email)) {
@@ -50,7 +56,7 @@ export const Login = ({ next }) => {
       </Line>
       { error && <Error>{error}</Error> }
       { loading && <Loading>Sending verification email ...</Loading>}
-      <Newline/>
+      <Line><Text/></Line>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text } from 'ink'
 import Link from 'ink-link'
+import open from 'open'
 
 import { approve, hide, unhide, purge } from '../api/listings'
 import { useAuth } from '../auth'
@@ -23,7 +24,7 @@ export const Listing = () => {
         <Text>{ listing.approved ? 'Yes' : 'No' }</Text>
       </Field>
       <Field label='⚡ Id'>
-        <Link url={`https://web.vitrin.cloud/listing/${listing.id}`}>
+        <Link fallback={false} url={`https://web.vitrin.cloud/listing/${listing.id}`}>
           <Faded>{ listing.id }</Faded>
         </Link>
       </Field>
@@ -33,12 +34,12 @@ export const Listing = () => {
         </Text>
       </Field>
       <Field label='📍 Location'>
-        <Link url={`https://maps.google.com?q=${listing.location.lat},${listing.location.long}`}>
+        <Link fallback={false} url={`https://maps.google.com?q=${listing.location.lat},${listing.location.long}`}>
           { listing.location.address }
         </Link>
       </Field>
       <Field label='🎬 Video'>
-        <Link url={listing.video.url}>
+        <Link fallback={false} url={listing.video.url}>
           { listing.video.token }
         </Link>
       </Field>
@@ -50,20 +51,43 @@ export const Listing = () => {
       </Field>
 
       <Actions actions={[
-        { label: 'Approve', action: async () => {
-          await approve(listing.id, token)
-          route(path.url, true, { listing: { ...listing, approved: true } })
-        } },
-        { label: 'Hide', action: async () => {
-          await hide(listing.id, token)
-        } },
-        { label: 'Unhide', action: async () => {
-          await unhide(listing.id, token)
-        } },
-        { label: 'Purge', action: async () => {
-          await purge(listing.id, token)
-          back()
-        } },
+        {
+          label: 'Open',
+          hint: 'opens the listing in a browser',
+          action: async () => {
+            open(`https://web.vitrin.cloud/listing/${listing.id}`)
+          }
+        },
+        {
+          label: 'Approve',
+          hint: 'marks the listing as approved.',
+          action: async () => {
+            await approve(listing.id, token)
+            route(path.url, true, { listing: { ...listing, approved: true } })
+          }
+        },
+        {
+          label: 'Hide',
+          hint: 'hides the listing, so it cannot be seen anywhere (even with share link).',
+          action: async () => {
+            await hide(listing.id, token)
+          }
+        },
+        {
+          label: 'Unhide',
+          hint: 'unhides the listing.',
+          action: async () => {
+            await unhide(listing.id, token)
+          }
+        },
+        {
+          label: 'Purge',
+          hint: 'removes the listing and its video.',
+          action: async () => {
+            await purge(listing.id, token)
+            back()
+          }
+        },
       ]}/>
     </>
   )

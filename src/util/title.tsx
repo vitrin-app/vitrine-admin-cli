@@ -7,7 +7,7 @@ import { Divider } from './divider'
 
 export const Title = ({ children }) => (
   <>
-    <Text bold color={theme.primary}>#  {children}</Text>
+    <Text bold color={theme.primary}>{theme.padding} {children}</Text>
     <Divider/>
   </>
 )
