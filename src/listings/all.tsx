@@ -2,24 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { Text, Box, Spacer } from 'ink'
 
 import { useAuth } from '../auth'
-import { useRouter } from '../router'
-import { getAllListings } from '../api/listings'
+import { useRouter, useRoute } from '../router'
+import { getAll } from '../api/listings'
 import { Title, List, Loading } from '../util'
 import { theme } from '../theme'
 
 
 export const AllListings = () => {
+  const { meta, path } = useRoute()
   const { route } = useRouter()
   const { token } = useAuth()
-  const [listings, setListings] = useState<any[]>([])
+  const [listings, setListings] = useState<any[]>(meta?.listings || [])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (
       async () => {
-        setLoading(true)
-        setListings((await getAllListings(token)).listings)
-        setLoading(false)
+        if (meta && meta.listings) {
+          setListings(meta.listings)
+          setLoading(false)
+        } else {
+          setLoading(true)
+          const l = (await getAll(token)).listings
+          setListings(l)
+          setLoading(false)
+          route(path, true, { listings: l })
+        }
       }
     )()
   }, [token])

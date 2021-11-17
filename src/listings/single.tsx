@@ -2,18 +2,23 @@ import React from 'react'
 import { Text } from 'ink'
 import Link from 'ink-link'
 
-import { Title, Field } from '../util'
+import { approve, hide, unhide, purge } from '../api/listings'
+import { useAuth } from '../auth'
+import { Title, Field, Actions } from '../util'
 import { Faded } from '../theme'
-import { useRoute } from '../router'
+import { useRoute, useRouter } from '../router'
 
 
 export const Listing = () => {
   const { meta } = useRoute()
+  const { path, route, back } = useRouter()
+  const { token } = useAuth()
   const listing = meta.listing
 
   return (
     <>
       <Title>{ listing.title }</Title>
+
       <Field label='✅ Approved'>
         <Text>{ listing.approved ? 'Yes' : 'No' }</Text>
       </Field>
@@ -43,6 +48,23 @@ export const Listing = () => {
       <Field label='📞 Phone Number'>
         <Text>{listing.contact.phone_number}</Text>
       </Field>
+
+      <Actions actions={[
+        { label: 'Approve', action: async () => {
+          await approve(listing.id, token)
+          route(path.url, true, { listing: { ...listing, approved: true } })
+        } },
+        { label: 'Hide', action: async () => {
+          await hide(listing.id, token)
+        } },
+        { label: 'Unhide', action: async () => {
+          await unhide(listing.id, token)
+        } },
+        { label: 'Purge', action: async () => {
+          await purge(listing.id, token)
+          back()
+        } },
+      ]}/>
     </>
   )
 }

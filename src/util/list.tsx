@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Text, Box, useInput } from 'ink'
+import { Box, useInput } from 'ink'
 
-import { Accent, Faded } from '../theme'
+import { Faded } from '../theme'
+import { Padding } from './padding'
 
 
 const DISPLAY_COUNT = 8
@@ -48,11 +49,11 @@ export function List<T>({ items, each, onSelect, showCounter }: ListProps<T>) {
 
   return (
     <>
-      { showCounter && items.length > 0 && <Faded>{index + 1}/{items.length}</Faded> }
+      { showCounter && items.length > 0 && <Faded><Padding/>{index + 1}/{items.length}</Faded> }
       {
         view.map((item, i) =>
           <Box key={i}>
-            {i + offset === index ? <Accent>▶ </Accent> : <Text>  </Text>}
+            <Padding/>
             {each(item, i + offset === index)}
           </Box>
         )

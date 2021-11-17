@@ -3,7 +3,7 @@ import { Text, Newline } from 'ink'
 import TextInput from 'ink-text-input'
 
 import { Accent, Error } from '../theme'
-import { Title, Loading } from '../util'
+import { Title, Loading, Line } from '../util'
 import { verifyEmail } from '../api/auth'
 
 
@@ -38,14 +38,16 @@ export const Login = ({ next }) => {
   return (
     <>
       <Title>🔑 Login</Title>
-      <Text>👉 Please enter your email address.</Text>
-      <Accent>
-        <TextInput placeholder='Your email address ...'
-          showCursor={false}
-          value={email}
-          onChange={setEmail}
-          onSubmit={submit}/>
-      </Accent>
+      <Line><Text>👉 Please enter your email address.</Text></Line>
+      <Line>
+        <Accent>
+          <TextInput placeholder='Your email address ...'
+            showCursor={false}
+            value={email}
+            onChange={setEmail}
+            onSubmit={submit}/>
+        </Accent>
+      </Line>
       { error && <Error>{error}</Error> }
       { loading && <Loading>Sending verification email ...</Loading>}
       <Newline/>

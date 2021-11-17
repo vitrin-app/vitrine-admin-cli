@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, Box, Newline, useInput } from 'ink'
 
-import { Title, Loading } from '../util'
+import { Title, Loading, Line, Padding } from '../util'
 import { theme, Error } from '../theme'
 import { confirm } from '../api/auth'
 
@@ -42,9 +42,14 @@ export const Confirm = ({ next, count = 6 }) => {
   return (
     <>
       <Title>🔑 Confirm Code</Title>
-      <Text>👉 We have just emailed you a confirmation code!</Text>
-      <Text>Please enter the code here and press <Text bold color={theme.primary}>{'<Enter>'}</Text></Text>
+      <Line>
+        <Text>👉 We have just emailed you a confirmation code!</Text>
+      </Line>
+      <Line>
+        <Text>Please enter the code here and press <Text bold color={theme.primary}>{'<Enter>'}</Text></Text>
+      </Line>
       <Box flexDirection='row'>
+        <Padding/>
         {
           code.map((c, i) => (
             <Box key={i} paddingX={1}

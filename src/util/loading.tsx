@@ -1,13 +1,15 @@
 import React from 'react'
-import Spinner from 'ink-spinner'
 import { Box } from 'ink'
 
-import { Primary, Faded } from '../theme'
+import { Faded } from '../theme'
+import { Padding } from './padding'
+import { Spinner } from './spinner'
 
 
 export const Loading = ({ children }) => (
   <Box>
-    <Primary><Spinner/></Primary>
+    <Padding/>
+    <Spinner/>
     <Faded> {children}</Faded>
   </Box>
 )

@@ -1,17 +1,15 @@
 import React from 'react'
 import { Text } from 'ink'
 
-import { Title } from './util'
+import { Title, Line } from './util'
 
 
 export const About = () => {
   return (
     <>
       <Title>❓ About this CLI</Title>
-      <Text>
-        Yeah there was no real reason to do this honestly. However I just enjoyed creating a CLI
-        admin for Vitrine, so here we go.
-      </Text>
+      <Line><Text>Yeah there was no real reason to do this honestly.</Text></Line>
+      <Line><Text>However, I enjoyed building it, and I think thats what counts.</Text></Line>
     </>
   )
 }
