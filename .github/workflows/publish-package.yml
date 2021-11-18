@@ -22,8 +22,7 @@ jobs:
             --scope=@vitrin-app \
             --registry=https://npm.pkg.github.com \
             -u $GITHUB_ACTOR \
-            -p $GITHUB_TOKEN \
-            -e ghanizadeh.eugene@gmail.com
+            -p $GITHUB_TOKEN
 
       - name: Install Dependencies
         run: npm ci
