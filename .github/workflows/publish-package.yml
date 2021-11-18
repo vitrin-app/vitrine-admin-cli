@@ -15,15 +15,6 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Login And Set The Scope
-        run: |
-          npm i -g npm-cli-login
-          npm-cli-login \
-            --scope=@vitrin-app \
-            --registry=https://npm.pkg.github.com \
-            -u $GITHUB_ACTOR \
-            -p $GITHUB_TOKEN
-
       - name: Install Dependencies
         run: npm ci
 
