@@ -25,7 +25,7 @@ export const Video = () => {
           <Faded>{ video.token }</Faded>
         </Link>
       </Field>
-      <Field label='🧑‍🦲 Uploader'>
+      <Field label='🤡 Uploader'>
         <Faded>{ video.owner.email }</Faded>
       </Field>
       <Field label='⏱️  Upload time'>
@@ -33,10 +33,13 @@ export const Video = () => {
           { new Date(video.uploaded).toLocaleString() }
         </Text>
       </Field>
-      <Field label='🔗 Listing'>
-        <Link fallback={false} url={`https://web.vitrin.cloud/listing/${video.listing}`}>
-          { video.listing }
-        </Link>
+      <Field label='🔗 Listing'>{
+        video.listing ?
+          <Link fallback={false} url={`https://web.vitrin.cloud/listing/${video.listing}`}>
+            { video.listing }
+          </Link>
+          : <Text>❌ Not Linked</Text>
+      }
       </Field>
 
       <Actions actions={[
