@@ -53,6 +53,7 @@ export const Listing = () => {
       <Actions actions={[
         {
           label: 'Open',
+          disabled: listing.hidden,
           hint: 'opens the listing in a browser',
           action: async () => {
             open(`https://web.vitrin.cloud/listing/${listing.id}`)
@@ -60,6 +61,7 @@ export const Listing = () => {
         },
         {
           label: 'Approve',
+          disabled: listing.approved,
           hint: 'marks the listing as approved.',
           action: async () => {
             await approve(listing.id, token)
@@ -68,16 +70,20 @@ export const Listing = () => {
         },
         {
           label: 'Hide',
+          disabled: listing.hidden,
           hint: 'hides the listing, so it cannot be seen anywhere (even with share link).',
           action: async () => {
             await hide(listing.id, token)
+            route(path.url, true, { listing: { ...listing, hidden: true } })
           }
         },
         {
           label: 'Unhide',
+          disabled: !listing.hidden,
           hint: 'unhides the listing.',
           action: async () => {
             await unhide(listing.id, token)
+            route(path.url, true, { listing: { ...listing, hidden: false } })
           }
         },
         {

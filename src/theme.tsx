@@ -6,8 +6,8 @@ export const theme = {
   primary: '#45EBA5',
   accent: '#FFB830',
   error: '#FF2442',
-  padding: '╏',
-  divider: '-'
+  padding: '#',
+  divider: ' '
 }
 
 

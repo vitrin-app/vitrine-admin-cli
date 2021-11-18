@@ -12,6 +12,7 @@ export interface ActionsProps {
   actions: {
     label: string,
     hint: string,
+    disabled?: boolean,
     action: () => Promise<void>
   }[]
 }
@@ -25,9 +26,19 @@ export const Actions = ({ actions }: ActionsProps) => {
   useInput(async (_, key) => {
     if (!loading) {
       if (key.leftArrow && index > 0) {
-        setIndex(index - 1)
+        let prev = index - 1
+        while (prev >= 0 && actions[prev]!.disabled) {
+          prev--
+        }
+
+        setIndex(prev)
       } else if (key.rightArrow && index < actions.length - 1) {
-        setIndex(index + 1)
+        let next = index + 1
+        while (next < actions.length - 1 && actions[next]!.disabled) {
+          next++
+        }
+
+        setIndex(next)
       } else if (key.return && !!actions[index]) {
         setLoading(true)
         setError(undefined)
@@ -57,7 +68,7 @@ export const Actions = ({ actions }: ActionsProps) => {
         <Padding/>
         {
           actions.map((action, i) => (
-            <Box key={i} marginRight={1}>
+            <Box key={i} marginRight={1} display={action.disabled ? 'none' : 'flex'}>
               <Text color={loading ? 'gray' : theme.accent} inverse={i === index && !loading}>
                 {loading && i === index ? <Spinner/> : <Text> </Text>}
                 <Text> {action.label}  </Text>

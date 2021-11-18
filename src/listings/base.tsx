@@ -7,7 +7,7 @@ import { List, Loading } from '../util'
 import { theme } from '../theme'
 
 
-export const BaseListing = ({ fetch }) => {
+export const BaseListing = ({ fetch, process = x => x }) => {
   const { meta, path } = useRoute()
   const { route, history, rewrite } = useRouter()
   const { token } = useAuth()
@@ -42,7 +42,7 @@ export const BaseListing = ({ fetch }) => {
 
     _history.push({
       url: `listings/single/${listing.id}`,
-      meta: { listing }
+      meta: { listing: process(listing) }
     })
 
     rewrite(_history)
