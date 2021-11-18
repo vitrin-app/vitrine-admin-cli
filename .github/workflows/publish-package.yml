@@ -18,8 +18,12 @@ jobs:
       - name: Login And Set The Scope
         run: |
           npm i -g npm-cli-login
-          npm-cli-login --scope=@vitrin-app --username=${GITHUB_ACTOR} --password=${GITHUB_TOKEN}
-
+          npm-cli-login \
+            --scope=@vitrin-app \
+            --registry=https://npm.pkg.github.com \
+            -u $GITHUB_ACTOR \
+            -p $GITHUB_TOKEN \
+            -e ghanizadeh.eugene@gmail.com
 
       - name: Install Dependencies
         run: npm ci
