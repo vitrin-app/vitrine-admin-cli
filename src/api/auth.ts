@@ -9,6 +9,6 @@ export const verifyEmail = async (email: string) => {
 }
 
 
-export const confirm = async (code: string) => {
-  return await get(BASE_URL + `?code=${code}`)
+export const confirm = async (code: string, email: string) => {
+  return await get(BASE_URL + `?code=${code}&email=${email}`)
 }

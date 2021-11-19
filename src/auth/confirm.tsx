@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Box, useInput } from 'ink'
 
+import { useRoute } from '../router'
 import { useHint } from '../hint'
 import { Title, Loading, Line, Padding } from '../util'
 import { theme, Error } from '../theme'
@@ -8,6 +9,7 @@ import { confirm } from '../api/auth'
 
 
 export const Confirm = ({ next, count = 6 }) => {
+  const { meta } = useRoute()
   const [code, setCode] = useState(new Array(count).fill('*'))
   const [index, setIndex] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -35,7 +37,7 @@ export const Confirm = ({ next, count = 6 }) => {
       setLoading(true)
 
       try {
-        const token = (await confirm(code.join(''))).token
+        const token = (await confirm(code.join(''), meta.email)).token
         setLoading(false)
         next(token)
       } catch (err: any) {

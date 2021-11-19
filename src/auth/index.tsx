@@ -38,7 +38,7 @@ export const Authenticated = ({ children }) => {
   return (
     <AuthContext.Provider value={{ token, logout }}>
       <Route path='login'>
-        <Login next={() => route('login/confirm', true)} />
+        <Login next={email => route('login/confirm', true, { email })} />
       </Route>
       <Route path='login/confirm'>
         <Confirm next={t => {
