@@ -1,7 +1,7 @@
 import { get, post } from './base'
 
 
-const BASE_URL = process.env['AUTH_URL'] || 'https://auth.vitrin.cloud'
+const BASE_URL = process.env['API_AUTH_URL'] || 'https://auth.vitrin.cloud'
 
 
 export const verifyEmail = async (email: string) => {

@@ -1,5 +1,9 @@
 # Admin CLI for Vitrine
 
+A CLI tool to manage Vitrine listings and videos.
+
+![Demo](./demo.gif)
+
 ## How to Install
 
 To install, you need to login to Github NPM Registry. If you have 2FA enabled,
@@ -7,20 +11,23 @@ you need to [create a personal access token first](https://docs.github.com/en/au
 of your Github password.
 
 ```bash
+#
+# 👉 step 1: login into Github NPM registry
+# NOTE: if you use 2FA, use the personal token instead of your password.
+#
 npm login --scope=@vitrin-app --registry=https://npm.pkg.github.com
 ```
-
-Also configure NPM to fetch `@vitrin-app` packages from Github registry (but not the rest):
-
 ```bash
+#
+# 👉 step 2: configure NPM to use Github registry for @vitrin packages
+#
 npm config set @vitrin-app:registry https://npm.pkg.github.com
 ```
-
-<br>
-
-Now you can install / update the CLI:
-
 ```bash
+#
+# 👉 step 3: install the CLI
+# Note: you can also update it with the same command
+#
 npm i -g @vitrin-app/admin-cli
 ```
 
@@ -28,9 +35,25 @@ npm i -g @vitrin-app/admin-cli
 
 ## How to Run
 
-Install first (obviously) then run the following:
+To use on production:
 
 ```bash
+vitrine-admin-cli
+```
+
+<br>
+
+You can also use the CLI to manage development / staging instances. The CLI accepts environment
+variables for configuring API connections, so just provide the environment variables for instances
+you want to manage:
+
+```bash
+API_LISTS_URL=<dev-listing-url> vitrine-admin-cli
+```
+```bash
+API_AUTH_URL=<dev-auth-url> \
+API_VIDEOS_URL=<dev-videos-url> \
+API_LISTS_URL=<dev-listing-url> \
 vitrine-admin-cli
 ```
 
