@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, Box, Spacer } from 'ink'
+import { useAsync } from 'react-use'
 
 import { useAuth } from '../auth'
 import { useRouter, useRoute } from '../router'
@@ -12,23 +13,15 @@ export const BaseVideos = ({ fetch }) => {
   const { route, history, rewrite } = useRouter()
   const { token } = useAuth()
   const [videos, setVideos] = useState<any[]>(meta?.videos || [])
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    (
-      async () => {
-        if (meta && meta.videos) {
-          setVideos(meta.videos)
-          setLoading(false)
-        } else {
-          setLoading(true)
-          const l = (await fetch(token))
-          setVideos(l)
-          setLoading(false)
-          route(path, true, { videos: l })
-        }
-      }
-    )()
+  const { loading } = useAsync(async () => {
+    if (meta && meta.videos) {
+      setVideos(meta.videos)
+    } else {
+      const l = (await fetch(token))
+      setVideos(l)
+      route(path, true, { videos: l })
+    }
   }, [token])
 
   const open = (video, index) => {

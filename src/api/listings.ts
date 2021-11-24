@@ -24,6 +24,11 @@ export const getHidden = async (token: string) => {
 }
 
 
+export const getUser = async (email: string, token: string) => {
+  return await get(BASE_URL + '/admin/user/?email=' + email, token)
+}
+
+
 export const approve = async (listing: string, token: string) => {
   await put(BASE_URL + '/admin/approve/' + listing, undefined, token)
 }

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { Text, Box, Spacer } from 'ink'
 
 import { useAuth } from '../auth'
@@ -12,40 +13,36 @@ export const BaseListing = ({ fetch, process = x => x }) => {
   const { route, history, rewrite } = useRouter()
   const { token } = useAuth()
   const [listings, setListings] = useState<any[]>(meta?.listings || [])
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    (
-      async () => {
-        if (meta && meta.listings) {
-          setListings(meta.listings)
-          setLoading(false)
-        } else {
-          setLoading(true)
-          const l = (await fetch(token)).listings
-          setListings(l)
-          setLoading(false)
-          route(path, true, { listings: l })
-        }
-      }
-    )()
-  }, [token])
+  const { loading } = useAsync(async () => {
+    if (meta && meta.listings) {
+      setListings(meta.listings)
+    } else if (fetch) {
+      const l = (await fetch(token)).listings
+      setListings(l)
+      route(path, true, {
+        ...meta,
+        listings: l
+      })
+    }
+  }
+  , [token, fetch])
 
   const open = (listing, index) => {
-    const _history = [...history]
-    _history[_history.length - 1] = {
-      url: _history[_history.length - 1]!.url,
-      meta: {
-        listings, index
+    if (listing) {
+      const _history = [...history]
+      _history[_history.length - 1] = {
+        url: _history[_history.length - 1]!.url,
+        meta: { ...meta, index }
       }
+
+      _history.push({
+        url: `listings/single/${listing.id}`,
+        meta: { listing: process(listing) }
+      })
+
+      rewrite(_history)
     }
-
-    _history.push({
-      url: `listings/single/${listing.id}`,
-      meta: { listing: process(listing) }
-    })
-
-    rewrite(_history)
   }
 
   return (

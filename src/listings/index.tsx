@@ -6,6 +6,7 @@ import { AllListings } from './all'
 import { UnapprovedListings } from './unapproved'
 import { ApprovedListings } from './approved'
 import { HiddenListings } from './hidden'
+import { UserListings } from './user-listings'
 import { Listing } from './single'
 
 
@@ -18,9 +19,10 @@ export const Listings = () => {
         <Menu
           routes={[
             { title: '❔ Unapproved Listings', path: 'listings/unapproved' },
+            { title: '👺 Hidden Listings', path: 'listings/hidden' },
+            { title: '😎 User Listings', path: 'listings/user' },
             { title: '🔮 All Listings', path: 'listings/all' },
             { title: '✅ Approved Listings', path: 'listings/approved' },
-            { title: '👺 Hidden Listings', path: 'listings/hidden' },
           ]}
         />
       </Route>
@@ -35,6 +37,9 @@ export const Listings = () => {
       </Route>
       <Route path='listings/hidden'>
         <HiddenListings/>
+      </Route>
+      <Route path='listings/user'>
+        <UserListings/>
       </Route>
       <Route path='listings/single/:id'>
         <Listing/>

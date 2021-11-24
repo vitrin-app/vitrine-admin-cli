@@ -8,6 +8,6 @@ import { getHidden } from '../api/listings'
 export const HiddenListings = () => (
   <>
     <Title>👺 Hidden Listings</Title>
-    <BaseListing fetch={getHidden} process={listing => ({...listing, hidden: true})}/>
+    <BaseListing fetch={getHidden}/>
   </>
 )
