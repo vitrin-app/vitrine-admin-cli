@@ -14,7 +14,7 @@ export const Listing = () => {
   const { meta } = useRoute()
   const { path, route, back } = useRouter()
   const { token } = useAuth()
-  const listing = meta.listing
+  const listing = meta.item
 
   return (
     <>

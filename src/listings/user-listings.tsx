@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Text } from 'ink'
 import TextInput from 'ink-text-input'
-import { useDebounce } from 'react-use'
+import useDebounce from 'react-use/lib/useDebounce'
 
 import { useRouter, useRoute } from '../router'
 import { getUser } from '../api/listings'
@@ -19,14 +19,14 @@ export const UserListings = () => {
   const [_, cancel] = useDebounce(() => {
     route(path, true, { email })
     setDebouncedEmail(email)
-  }, 500, [email])
+  }, 500, [email, route, path])
 
   useEffect(() => {
     if (meta && meta.email) {
       setEmail(meta.email)
       setTimeout(() => cancel(), 1)
     }
-  }, [])
+  }, [meta, cancel])
 
   const fetch = useCallback((token) => getUser(debouncedEmail, token), [debouncedEmail])
 

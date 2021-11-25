@@ -14,7 +14,7 @@ export const Video = () => {
   const { meta } = useRoute()
   const { back } = useRouter()
   const { token } = useAuth()
-  const video = meta.video
+  const video = meta.item
 
   return (
     <>

@@ -6,8 +6,8 @@ import { Route } from './router'
 import { Title, Menu } from './util'
 import { Listings } from './listings'
 import { Videos } from './videos'
+import { AuthCodes } from './auth/codes'
 import { About } from './about'
-
 
 export const App = () => {
   return (
@@ -19,6 +19,7 @@ export const App = () => {
             routes={[
               { title: '⚡ Listings', path: 'listings/home' },
               { title: '🎬 Videos', path: 'videos/home' },
+              { title: '🔑 Authentication Codes', path: 'auth/codes/home' },
               { title: '❓ About', path: 'about'},
               { title: '🔒 Logout', path: 'logout' },
             ]}
@@ -26,6 +27,7 @@ export const App = () => {
         </Route>
         <Route path='listings/**'><Listings/></Route>
         <Route path='videos/**'><Videos/></Route>
+        <Route path='auth/codes/**'><AuthCodes/></Route>
         <Route path='about'><About/></Route>
       </Authenticated>
     </Hinted>

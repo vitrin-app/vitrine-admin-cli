@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Box, useInput } from 'ink'
 
-import { useHint } from '../hint'
+import { useHint } from '../../hint'
 import { Padding } from './padding'
 
 
@@ -23,7 +23,7 @@ export function List<T>({ items, each, onSelect, showCounter, startIndex }: List
 
   const { hint } = useHint()
 
-  const correctIndex = (newIndex: number) => {
+  const correctIndex = useCallback((newIndex: number) => {
     let newOffset = offset
     if (newIndex > offset + DISPLAY_COUNT - SCROLL_THRESHOLD && offset < items.length - DISPLAY_COUNT) {
       newOffset = newIndex - DISPLAY_COUNT + SCROLL_THRESHOLD
@@ -33,11 +33,11 @@ export function List<T>({ items, each, onSelect, showCounter, startIndex }: List
 
     setView(items.slice(newOffset, newOffset + DISPLAY_COUNT))
     setOffset(newOffset)
-  }
+  }, [offset, items])
 
   useEffect(() => {
     correctIndex(index)
-  }, [startIndex])
+  }, [startIndex, correctIndex])
 
   useEffect(() => {
     hint([

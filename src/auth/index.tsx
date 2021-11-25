@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
 
 import { Route, useRouter } from '../router'
-import { Loading } from '../util/loading'
+import { Loading } from '../util'
 import { Confirm } from './confirm'
 import { Login } from './login'
 import { Logout } from './logout'

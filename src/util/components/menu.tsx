@@ -2,8 +2,8 @@ import React from 'react'
 import { Text } from 'ink'
 
 import { List } from './list'
-import { useRouter } from '../router'
-import { theme } from '../theme'
+import { useRouter } from '../../router'
+import { theme } from '../../theme'
 
 
 export interface MenuProps {

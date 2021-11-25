@@ -2,7 +2,7 @@ import React from 'react'
 import { Text } from 'ink'
 
 import { Padding } from './padding'
-import { theme } from '../theme'
+import { theme } from '../../theme'
 
 
 const LINE = new Array(16).fill(theme.divider).join('')

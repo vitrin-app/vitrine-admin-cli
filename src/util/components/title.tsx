@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from 'ink'
 
-import { theme } from '../theme'
+import { theme } from '../../theme'
 import { Divider } from './divider'
 
 

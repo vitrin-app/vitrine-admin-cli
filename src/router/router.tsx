@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react'
+import React, { useState, createContext, useContext, useCallback } from 'react'
 import { useInput, useApp } from 'ink'
 
 import { Line } from '../util'
@@ -24,24 +24,32 @@ export const Routed = ({children}) => {
   const [history, setHistory] = useState<Path[]>([{ url: '' }])
   const { exit } = useApp()
 
+  const route = useCallback((url, replace = false, meta = undefined) => {
+    if (replace) {
+      setHistory(history.slice(0, history.length - 1).concat({ url, meta }))
+    } else {
+      setHistory(history.concat({ url, meta }))
+    }
+  }, [history])
+
+  const rewrite = useCallback((h: Path[]) => {
+    setHistory(h)
+  }, [])
+
+  const back = useCallback(() => {
+    if (history.length > 1) {
+      setHistory(history.slice(0, history.length - 1))
+    } else {
+      exit()
+    }
+  }, [history, exit])
+
   const router: Router = {
     history,
     path: history[history.length - 1]!,
-    route: (url, replace = false, meta = undefined) => {
-      if (replace) {
-        setHistory(history.slice(0, history.length - 1).concat({ url, meta }))
-      } else {
-        setHistory(history.concat({ url, meta }))
-      }
-    },
-    rewrite: (h: Path[]) => setHistory(h),
-    back: () => {
-      if (history.length > 1) {
-        setHistory(history.slice(0, history.length - 1))
-      } else {
-        exit()
-      }
-    }
+    route,
+    rewrite,
+    back,
   }
 
   useInput((_, key) => {
@@ -62,4 +70,3 @@ export const Routed = ({children}) => {
 
 
 export const useRouter = () => useContext(RouterContext)
-

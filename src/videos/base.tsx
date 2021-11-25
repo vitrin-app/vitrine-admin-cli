@@ -1,50 +1,25 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import { Text, Box, Spacer } from 'ink'
-import { useAsync } from 'react-use'
 
 import { useAuth } from '../auth'
-import { useRouter, useRoute } from '../router'
-import { List, Loading } from '../util'
+import { List, Loading, useCachedList } from '../util'
 import { theme } from '../theme'
 
 
 export const BaseVideos = ({ fetch }) => {
-  const { meta, path } = useRoute()
-  const { route, history, rewrite } = useRouter()
   const { token } = useAuth()
-  const [videos, setVideos] = useState<any[]>(meta?.videos || [])
 
-  const { loading } = useAsync(async () => {
-    if (meta && meta.videos) {
-      setVideos(meta.videos)
-    } else {
-      const l = (await fetch(token))
-      setVideos(l)
-      route(path, true, { videos: l })
-    }
-  }, [token])
+  const doFetch = useCallback(
+    async () => (await fetch(token)),
+    [fetch, token]
+  )
 
-  const open = (video, index) => {
-    const _history = [...history]
-    _history[_history.length - 1] = {
-      url: _history[_history.length - 1]!.url,
-      meta: {
-        videos, index
-      }
-    }
-
-    _history.push({
-      url: `videos/single/${video.token}`,
-      meta: { video }
-    })
-
-    rewrite(_history)
-  }
+  const videos = useCachedList<any>(doFetch, video => `videos/single/${video.id}`)
 
   return (
     <>
-      <List items={videos}
-        startIndex={meta?.index || 0}
+      <List items={videos.items}
+        startIndex={videos.index}
         each={(video, focused) =>
           <Box width='75%'>
             <Text color={focused ? theme.accent : 'white'}>{video.owner.email}</Text>
@@ -54,10 +29,10 @@ export const BaseVideos = ({ fetch }) => {
             </Text>
           </Box>
         }
-        onSelect={open}
+        onSelect={videos.open}
         showCounter={true}
       />
-      {loading && <Loading>Loading videos ...</Loading>}
+      {videos.loading && <Loading>Loading videos ...</Loading>}
     </>
   )
 }

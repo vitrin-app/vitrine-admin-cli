@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Box, Text, useInput } from 'ink'
 
-import { useHint } from '../hint'
-import { theme, Error } from '../theme'
+import { useHint } from '../../hint'
+import { theme, Error } from '../../theme'
 import { Divider } from './divider'
 import { Padding } from './padding'
 import { Spinner } from './spinner'
@@ -23,7 +23,7 @@ export const Actions = ({ actions }: ActionsProps) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  useInput(async (_, key) => {
+  const handler = useCallback(async (_, key) => {
     if (!loading) {
       if (key.leftArrow && index > 0) {
         let prev = index - 1
@@ -52,7 +52,9 @@ export const Actions = ({ actions }: ActionsProps) => {
         }
       }
     }
-  })
+  }, [index, actions, loading])
+
+  useInput(handler)
 
   useEffect(() => {
     hint([

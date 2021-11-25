@@ -1,54 +1,25 @@
-import React, { useState } from 'react'
-import { useAsync } from 'react-use'
+import React, { useCallback } from 'react'
 import { Text, Box, Spacer } from 'ink'
 
 import { useAuth } from '../auth'
-import { useRouter, useRoute } from '../router'
-import { List, Loading } from '../util'
+import { List, Loading, useCachedList } from '../util'
 import { theme } from '../theme'
 
 
-export const BaseListing = ({ fetch, process = x => x }) => {
-  const { meta, path } = useRoute()
-  const { route, history, rewrite } = useRouter()
+export const BaseListing = ({ fetch }) => {
   const { token } = useAuth()
-  const [listings, setListings] = useState<any[]>(meta?.listings || [])
 
-  const { loading } = useAsync(async () => {
-    if (meta && meta.listings) {
-      setListings(meta.listings)
-    } else if (fetch) {
-      const l = (await fetch(token)).listings
-      setListings(l)
-      route(path, true, {
-        ...meta,
-        listings: l
-      })
-    }
-  }
-  , [token, fetch])
+  const doFetch = useCallback(
+    async () => (await fetch(token)).listings,
+    [fetch, token]
+  )
 
-  const open = (listing, index) => {
-    if (listing) {
-      const _history = [...history]
-      _history[_history.length - 1] = {
-        url: _history[_history.length - 1]!.url,
-        meta: { ...meta, index }
-      }
-
-      _history.push({
-        url: `listings/single/${listing.id}`,
-        meta: { listing: process(listing) }
-      })
-
-      rewrite(_history)
-    }
-  }
+  const listings = useCachedList<any>(doFetch, listing => `listings/single/${listing.id}`)
 
   return (
     <>
-      <List items={listings}
-        startIndex={meta?.index || 0}
+      <List items={listings.items}
+        startIndex={listings.index}
         each={(listing, focused) =>
           <Box width='75%'>
             <Text color={focused ? theme.accent : 'white'}>{listing.title}</Text>
@@ -58,10 +29,10 @@ export const BaseListing = ({ fetch, process = x => x }) => {
             </Text>
           </Box>
         }
-        onSelect={open}
+        onSelect={listings.open}
         showCounter={true}
       />
-      {loading && <Loading>Loading listings ...</Loading>}
+      {listings.loading && <Loading>Loading listings ...</Loading>}
     </>
   )
 }

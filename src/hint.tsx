@@ -13,7 +13,7 @@ export const Hinted = ({ children }) => {
   const [lines, setLines] = useState<string[]>([])
 
   return (
-    <HintContext.Provider value={{ hint: l => setLines(l) }}>
+    <HintContext.Provider value={{ hint: setLines }}>
       {children}
       <Line><Text/></Line>
       <Line><Text/></Line>
