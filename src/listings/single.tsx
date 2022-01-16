@@ -49,6 +49,9 @@ export const Listing = () => {
       <Field label='📞 Phone Number'>
         <Text>{listing.contact.phone_number}</Text>
       </Field>
+      <Field label='🌍 Public'>
+        <Text>{ listing.public ? 'Yes' : 'No' }</Text>
+      </Field>
 
       <Actions actions={[
         {
