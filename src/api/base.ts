@@ -1,4 +1,7 @@
 import fetch from 'isomorphic-fetch'
+import chalk from 'chalk'
+
+import { theme } from '../theme'
 
 
 export const request = async (method: string, url: string, body?: any, token?: string) => {
@@ -17,21 +20,29 @@ export const request = async (method: string, url: string, body?: any, token?: s
     opts.body = JSON.stringify(body)
   }
 
-  const response = await fetch(url, opts)
+  try {
+    const response = await fetch(url, opts)
 
-  if (!response.ok) {
-    let message = await response.text()
-    try {
-      message = JSON.parse(message).message
-    } catch { /* ignore */ }
+    if (!response.ok) {
+      let message = await response.text()
+      try {
+        message = JSON.parse(message).message
+      } catch (error) {
+        console.log(chalk.hex(theme.error)(error))
+      }
 
-    throw new Error(message)
-  } else {
-    try {
-      return await response.json()
-    } catch {
-      return
+      throw new Error(message)
+    } else {
+      try {
+        return await response.json()
+      } catch (error) {
+        console.log(chalk.hex(theme.error)(error))
+
+        return
+      }
     }
+  } catch (error) {
+    console.log(chalk.hex(theme.error)(error))
   }
 }
 
