@@ -4,6 +4,12 @@ A CLI tool to manage Vitrine listings and videos.
 
 ![Demo](./demo.gif)
 
+## Requirements
+
+You need [Node.js](https://nodejs.org/en/) and [NPM](https://www.npmjs.com) to use this tool.
+NPM is automatically installed alongside Node. Make sure you install the proper version of Node, 
+in particular you would need `node>12` for this tool to work.
+
 ## How to Install
 
 To install, you need to login to Github NPM Registry. If you have 2FA enabled,

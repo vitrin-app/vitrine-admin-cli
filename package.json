@@ -1,6 +1,6 @@
 {
 	"name": "@vitrin-app/admin-cli",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -13,7 +13,7 @@
 		"vitrine-admin-cli": "dist/cli.js"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"scripts": {
 		"build": "tsc",
