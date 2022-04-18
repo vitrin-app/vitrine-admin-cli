@@ -35,7 +35,7 @@ export const Video = () => {
       </Field>
       <Field label='🔗 Listing'>{
         video.listing ?
-          <Link fallback={false} url={`https://web.vitrin.cloud/listing/${video.listing}`}>
+          <Link fallback={false} url={`https://web.vitrine.cloud/listing/${video.listing}`}>
             { video.listing }
           </Link>
           : <Text>❌ Not Linked</Text>
@@ -54,7 +54,7 @@ export const Video = () => {
           label: 'Open Listing',
           hint: 'opens the listing of this video.',
           action: async () => {
-            open(`https://web.vitrin.cloud/listing/${video.listing}`)
+            open(`https://web.vitrine.cloud/listing/${video.listing}`)
           }
         },
         {

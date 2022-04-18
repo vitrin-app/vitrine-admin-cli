@@ -1,7 +1,7 @@
 import { get, del } from './base'
 
 
-export const BASE_URL = process.env['API_VIDEOS_URL'] || 'https://video.vitrin.cloud'
+export const BASE_URL = process.env['API_VIDEOS_URL'] || 'https://video.vitrine.cloud'
 
 
 export const getAll = async (token: string) => {

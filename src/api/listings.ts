@@ -1,7 +1,7 @@
 import { get, put, del } from './base'
 
 
-export const BASE_URL = process.env['API_LISTS_URL'] || 'https://list.vitrin.cloud'
+export const BASE_URL = process.env['API_LISTS_URL'] || 'https://list.vitrine.cloud'
 
 
 export const getAll = async (token: string) => {

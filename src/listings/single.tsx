@@ -24,7 +24,7 @@ export const Listing = () => {
         <Text>{ listing.approved ? 'Yes' : 'No' }</Text>
       </Field>
       <Field label='⚡ Id'>
-        <Link fallback={false} url={`https://web.vitrin.cloud/listing/${listing.id}`}>
+        <Link fallback={false} url={`https://web.vitrine.cloud/listing/${listing.id}`}>
           <Faded>{ listing.id }</Faded>
         </Link>
       </Field>
@@ -59,7 +59,7 @@ export const Listing = () => {
           disabled: listing.hidden,
           hint: 'opens the listing in a browser',
           action: async () => {
-            open(`https://web.vitrin.cloud/listing/${listing.id}`)
+            open(`https://web.vitrine.cloud/listing/${listing.id}`)
           }
         },
         {

@@ -105,3 +105,6 @@ dist
 
 # Authentication token
 .auth-token
+
+# Weird stuff
+.DS_Store
