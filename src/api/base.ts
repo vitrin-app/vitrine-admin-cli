@@ -35,9 +35,7 @@ export const request = async (method: string, url: string, body?: any, token?: s
     } else {
       try {
         return await response.json()
-      } catch (error) {
-        console.log(chalk.hex(theme.error)(error))
-
+      } catch  {
         return
       }
     }

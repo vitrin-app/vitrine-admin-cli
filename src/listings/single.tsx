@@ -68,7 +68,7 @@ export const Listing = () => {
           hint: 'marks the listing as approved.',
           action: async () => {
             await approve(listing.id, token)
-            route(path.url, true, { listing: { ...listing, approved: true } })
+            route(path.url, true, { item: { ...listing, approved: true } })
           }
         },
         {
@@ -77,7 +77,7 @@ export const Listing = () => {
           hint: 'hides the listing, so it cannot be seen anywhere (even with share link).',
           action: async () => {
             await hide(listing.id, token)
-            route(path.url, true, { listing: { ...listing, hidden: true } })
+            route(path.url, true, { item: { ...listing, hidden: true } })
           }
         },
         {
@@ -86,7 +86,7 @@ export const Listing = () => {
           hint: 'unhides the listing.',
           action: async () => {
             await unhide(listing.id, token)
-            route(path.url, true, { listing: { ...listing, hidden: false } })
+            route(path.url, true, { item: { ...listing, hidden: false } })
           }
         },
         {
