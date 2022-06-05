@@ -47,3 +47,8 @@ export const unhide = async (listing: string, token: string) => {
 export const purge = async (listing: string, token: string) => {
   await del(BASE_URL + '/admin/purge/' + listing, token)
 }
+
+
+export const bump = async (listing: string, token: string) => {
+  await put(BASE_URL + '/admin/bump/' + listing, undefined, token)
+}

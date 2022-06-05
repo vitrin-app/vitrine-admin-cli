@@ -3,7 +3,7 @@ import { Text } from 'ink'
 import Link from 'ink-link'
 import open from 'open'
 
-import { approve, hide, unhide, purge } from '../api/listings'
+import { approve, hide, unhide, purge, bump } from '../api/listings'
 import { useAuth } from '../auth'
 import { Title, Field, Actions } from '../util'
 import { Faded } from '../theme'
@@ -97,6 +97,14 @@ export const Listing = () => {
             back()
           }
         },
+        {
+          label: 'Bump',
+          hint: 'bump the listing to the top of the list.',
+          action: async () => {
+            await bump(listing.id, token)
+            route(path.url, true, { item: { ...listing, submit_time : new Date().toISOString() } })
+          }
+        }
       ]}/>
     </>
   )
