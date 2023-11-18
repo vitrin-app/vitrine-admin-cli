@@ -22,7 +22,7 @@ export const BaseVideos = ({ fetch }) => {
         startIndex={videos.index}
         each={(video, focused) =>
           <Box width='75%'>
-            <Text color={focused ? theme.accent : 'white'}>{video.owner.email}</Text>
+            <Text color={focused ? theme.accent : 'white'}>{video.owner?.email ?? '??'}</Text>
             <Spacer/>
             <Text color={focused ? theme.accent : 'gray'}>
               {new Date(video.uploaded).toLocaleString()}
